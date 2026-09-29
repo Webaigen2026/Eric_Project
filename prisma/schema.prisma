@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String?
+  createdAt    DateTime @default(now())
+}
+
+model Customer {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  phone         String
+  emailVerified Boolean   @default(false)
+  otpHash       String?
+  otpExpiresAt  DateTime?
+  createdAt     DateTime  @default(now())
+  orders        Order[]
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  description String      @default("")
+  category    String
+  priceCents  Int
+  imageUrl    String?
+  stockOnHand Int         @default(0)
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+}
+
+model Order {
+  id                String      @id @default(cuid())
+  orderNumber       String      @unique
+  customerId        String?
+  customerName      String
+  phone             String
+  email             String
+  notes             String      @default("")
+  preferredPickupAt DateTime?
+  expiresAt         DateTime?
+  status            String      @default("pending")
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  customer          Customer?   @relation(fields: [customerId], references: [id])
+  items             OrderItem[]
+
+  @@index([customerId])
+}
+
+model OrderItem {
+  id             String  @id @default(cuid())
+  orderId        String
+  productId      String
+  quantity       Int
+  unitPriceCents Int
+  order          Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product        Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model StoreSettings {
+  id                 String @id @default("default")
+  storeName          String @default("Da liquor-store")
+  tagline            String @default("Fine spirits, local pickup")
+  address            String @default("124 Harbor Street, Riverton")
+  phone              String @default("(555) 014-8820")
+  email              String @default("hello@emberandoak.example")
+  hours              String @default("Mon–Thu 10am–9pm\nFri–Sat 10am–11pm\nSun 12pm–7pm")
+  announcementBanner String @default("")
+}
