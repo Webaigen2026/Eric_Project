@@ -71,3 +71,16 @@ Checkout requires a customer login. Staff use `/admin/login`.
 
 Available stock = on-hand − quantities on open orders (`pending` / `ready`).  
 Marking **picked up** decrements on-hand. **Cancel** releases the hold without changing on-hand.
+
+## Deploy on Vercel
+
+Product photos are stored in Postgres and served from `/api/images`, so they survive a serverless deploy. The production build runs `prisma migrate deploy` before `next build`.
+
+In the Vercel project settings, set:
+
+- `DATABASE_URL` — Neon pooled URL (`-pooler` in the host, `pgbouncer=true`)
+- `DIRECT_URL` — Neon direct URL (no `-pooler`)
+- `AUTH_SECRET` — a long random string
+- `AUTH_URL` — the live site URL, such as `https://your-app.vercel.app`
+
+Leave `AUTH_URL` off localhost once the site is public. Optional SMTP variables send real verification emails; without them, registration codes are only written to the server log.

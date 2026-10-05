@@ -21,7 +21,7 @@ export function StoreHeader({ storeName, announcement }: Props) {
   }
 
   return (
-    <header className="sticky top-3 z-40 px-3">
+    <header className="px-3 pt-3">
       <div className="store-nav mx-auto max-w-6xl overflow-hidden rounded-2xl border border-[#6d45a3] bg-[#3d1b6e] shadow-[0_8px_24px_rgba(0,0,0,0.28)]">
       {announcement ? (
         <div className="border-b border-[#6d45a3] px-4 py-1.5 text-center text-xs">
@@ -60,12 +60,6 @@ export function StoreHeader({ storeName, announcement }: Props) {
               Login
             </Link>
           )}
-          <Link
-            href="/admin/login"
-            className="hidden md:inline"
-          >
-            Staff
-          </Link>
           <Link href="/cart" className="btn">
             Cart
             {itemCount > 0 ? (

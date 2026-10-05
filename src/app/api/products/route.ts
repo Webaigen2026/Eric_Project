@@ -29,12 +29,7 @@ export async function GET(req: Request) {
       ...(all && isAdmin ? {} : { isActive: true }),
       ...(category ? { category } : {}),
       ...(q
-        ? {
-            OR: [
-              { name: { contains: q } },
-              { description: { contains: q } },
-            ],
-          }
+        ? { name: { startsWith: q, mode: "insensitive" } }
         : {}),
     },
     orderBy: [{ category: "asc" }, { name: "asc" }],

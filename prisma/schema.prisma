@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -74,6 +75,13 @@ model OrderItem {
 
   @@index([orderId])
   @@index([productId])
+}
+
+model StoredImage {
+  id          String   @id @default(cuid())
+  contentType String
+  data        Bytes
+  createdAt   DateTime @default(now())
 }
 
 model StoreSettings {

@@ -1,7 +1,22 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import fs from "fs";
+import path from "path";
 
 const prisma = new PrismaClient();
+
+async function storeLocalImage(imageUrl?: string | null) {
+  if (!imageUrl?.startsWith("/uploads/")) return imageUrl ?? null;
+  const filePath = path.join(process.cwd(), "public", imageUrl);
+  if (!fs.existsSync(filePath)) return null;
+  const image = await prisma.storedImage.create({
+    data: {
+      contentType: "image/png",
+      data: fs.readFileSync(filePath),
+    },
+  });
+  return `/api/images/${image.id}`;
+}
 
 function slugify(name: string) {
   return name
@@ -154,6 +169,7 @@ async function main() {
 
   for (const p of products) {
     const slug = slugify(p.name);
+    const imageUrl = await storeLocalImage(p.imageUrl);
     await prisma.product.upsert({
       where: { slug },
       update: {
@@ -162,7 +178,7 @@ async function main() {
         category: p.category,
         priceCents: p.priceCents,
         stockOnHand: p.stockOnHand,
-        imageUrl: p.imageUrl ?? null,
+        ...(imageUrl ? { imageUrl } : {}),
         isActive: true,
       },
       create: {
@@ -172,7 +188,7 @@ async function main() {
         category: p.category,
         priceCents: p.priceCents,
         stockOnHand: p.stockOnHand,
-        imageUrl: p.imageUrl ?? null,
+        imageUrl,
         isActive: true,
       },
     });

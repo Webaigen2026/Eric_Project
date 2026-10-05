@@ -6,6 +6,8 @@ import { StoreHeader } from "@/components/StoreHeader";
 import { prisma } from "@/lib/prisma";
 import { expireReservations } from "@/lib/stock";
 
+export const dynamic = "force-dynamic";
+
 async function getSettings() {
   const settings = await prisma.storeSettings.findUnique({
     where: { id: "default" },

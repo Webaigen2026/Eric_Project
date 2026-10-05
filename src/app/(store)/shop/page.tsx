@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { getHeldQuantities } from "@/lib/stock";
 import { CATEGORIES } from "@/lib/format";
 import { ProductCard } from "@/components/ProductCard";
+import { ShopSearch } from "@/components/ShopSearch";
 import Link from "next/link";
 
 type Props = {
@@ -22,12 +23,7 @@ export default async function ShopPage({ searchParams }: Props) {
         ? { category }
         : {}),
       ...(q
-        ? {
-            OR: [
-              { name: { contains: q } },
-              { description: { contains: q } },
-            ],
-          }
+        ? { name: { startsWith: q, mode: "insensitive" } }
         : {}),
     },
     orderBy: [{ category: "asc" }, { name: "asc" }],
@@ -44,19 +40,7 @@ export default async function ShopPage({ searchParams }: Props) {
       <h1 className="page-title">Shop</h1>
       <p className="lede">Select bottles to reserve for in-store pickup.</p>
 
-      <form className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center" method="get">
-        <input
-          type="search"
-          name="q"
-          defaultValue={q ?? ""}
-          placeholder="Search"
-          className="field mt-0 sm:max-w-sm"
-        />
-        {category ? <input type="hidden" name="category" value={category} /> : null}
-        <button type="submit" className="btn btn-quiet">
-          Search
-        </button>
-      </form>
+      <ShopSearch q={q} category={category} />
 
       <div className="mt-4 flex flex-wrap gap-1 border-b border-[var(--line)]">
         <Link href="/shop" className={!category ? "chip chip-active" : "chip"}>
