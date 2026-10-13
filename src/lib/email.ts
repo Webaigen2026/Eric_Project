@@ -10,24 +10,34 @@ type SendOtpResult = {
 export async function sendOtpEmail(
   to: string,
   otp: string,
-  name: string
+  name: string,
+  purpose: "verify" | "reset" = "verify"
 ): Promise<SendOtpResult> {
-  const storeName = process.env.STORE_EMAIL_NAME || "Da liquor-store";
-  const subject = `${otp} is your ${storeName} verification code`;
+  const storeName = process.env.STORE_EMAIL_NAME || "Da-Liquorstore";
+  const isReset = purpose === "reset";
+  const subject = isReset
+    ? `${otp} is your ${storeName} password reset code`
+    : `${otp} is your ${storeName} verification code`;
+  const intro = isReset
+    ? "Use this code to reset your password:"
+    : "Your verification code is:";
+  const ignore = isReset
+    ? "It expires in 10 minutes. If you did not ask to reset your password, you can ignore this email."
+    : "It expires in 10 minutes. If you did not create an account, you can ignore this email.";
   const text = `Hi ${name},
 
-Your verification code is: ${otp}
+${intro} ${otp}
 
-It expires in 10 minutes. If you did not create an account, you can ignore this email.
+${ignore}
 
 — ${storeName}`;
   const html = `
     <div style="font-family: Georgia, serif; color: #1a1612; max-width: 480px;">
       <h1 style="font-size: 24px; color: #c4782c;">${storeName}</h1>
       <p>Hi ${name},</p>
-      <p>Your verification code is:</p>
+      <p>${intro}</p>
       <p style="font-size: 32px; letter-spacing: 6px; font-weight: bold;">${otp}</p>
-      <p style="color: #5c5348;">It expires in 10 minutes. If you did not create an account, ignore this email.</p>
+      <p style="color: #5c5348;">${ignore}</p>
     </div>
   `;
 

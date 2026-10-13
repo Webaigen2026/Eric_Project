@@ -19,7 +19,7 @@ export function AgeGate({ children }: { children: ReactNode }) {
     return (
       <div className="flex min-h-screen items-center bg-[var(--background)] px-6">
         <div className="mx-auto w-full max-w-sm">
-          <p className="kicker">Da liquor-store</p>
+          <p className="kicker">Da-Liquorstore</p>
           <h1 className="page-title mt-2">Are you 21 or older?</h1>
           <p className="lede">
             You must be of legal drinking age to enter this site.

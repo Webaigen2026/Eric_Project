@@ -11,7 +11,7 @@ export default async function AdminSettingsPage() {
   return (
     <SettingsForm
       initial={{
-        storeName: settings?.storeName ?? "Da liquor-store",
+        storeName: settings?.storeName ?? "Da-Liquorstore",
         tagline: settings?.tagline ?? "",
         address: settings?.address ?? "",
         phone: settings?.phone ?? "",

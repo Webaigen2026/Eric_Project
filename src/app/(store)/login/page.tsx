@@ -67,6 +67,16 @@ function CustomerLoginForm() {
           Password
           <input name="password" type="password" required className="field" />
         </label>
+        <p className="text-sm">
+          <Link href="/forgot-password" className="text-[var(--ink-muted)] hover:text-[var(--ink)]">
+            Forgot password
+          </Link>
+        </p>
+        {searchParams.get("reset") ? (
+          <p className="text-sm text-[var(--ink-muted)]">
+            Password updated. Sign in with your new password.
+          </p>
+        ) : null}
         {error ? <p className="form-error">{error}</p> : null}
         <button type="submit" disabled={loading} className="btn btn-primary">
           {loading ? "Signing in…" : "Sign in"}

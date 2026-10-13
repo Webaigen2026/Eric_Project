@@ -47,6 +47,7 @@ export async function POST(req: Request) {
             emailVerified: false,
             otpHash,
             otpExpiresAt,
+            otpPurpose: "verify",
           },
         })
       : await prisma.customer.create({
@@ -58,10 +59,11 @@ export async function POST(req: Request) {
             emailVerified: false,
             otpHash,
             otpExpiresAt,
+            otpPurpose: "verify",
           },
         });
 
-    const mail = await sendOtpEmail(email, otp, name);
+    const mail = await sendOtpEmail(email, otp, name, "verify");
 
     return NextResponse.json(
       {

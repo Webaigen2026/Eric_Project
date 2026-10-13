@@ -1,4 +1,4 @@
-# Ember & Oak — Hold-for-Pickup Liquor Store
+# Da-Liquorstore — Hold-for-Pickup Liquor Store
 
 Retail storefront with age gate, catalog, cart, and **hold-for-pickup** orders. Store owners manage products, orders, and settings from `/admin`. Customers pay at the counter — no online payment or delivery in v1.
 
@@ -33,17 +33,17 @@ Customers sign in at `/login` (or create an account at `/register`). Registratio
 
 ### Email (OTP)
 
-Set SMTP in `.env` to send real mail:
+Registration and password reset email a 6-digit code. Set SMTP in `.env`:
 
 ```
-SMTP_HOST=smtp.example.com
+SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_USER=...
-SMTP_PASS=...
-SMTP_FROM="Ember & Oak <noreply@example.com>"
+SMTP_USER=you@gmail.com
+SMTP_PASS=your-gmail-app-password
+SMTP_FROM="Da-Liquorstore <you@gmail.com>"
 ```
 
-Without SMTP, the code is printed in the **server console** and shown on the verify page in development.
+Without SMTP, the code is printed in the **server console** and shown on the verify or reset page in development. Customers reset at `/forgot-password`. Staff reset at `/admin/forgot-password`.
 
 Checkout requires a customer login. Staff use `/admin/login`.
 

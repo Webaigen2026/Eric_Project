@@ -28,6 +28,13 @@ export async function POST(req: Request) {
       );
     }
 
+    if (customer.otpPurpose === "reset") {
+      return NextResponse.json(
+        { error: "That code is for password reset. Use Forgot password." },
+        { status: 400 }
+      );
+    }
+
     if (customer.emailVerified) {
       return NextResponse.json({ ok: true, alreadyVerified: true });
     }
@@ -53,6 +60,7 @@ export async function POST(req: Request) {
         emailVerified: true,
         otpHash: null,
         otpExpiresAt: null,
+        otpPurpose: null,
       },
     });
 

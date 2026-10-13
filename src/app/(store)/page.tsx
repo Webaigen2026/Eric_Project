@@ -14,7 +14,7 @@ export default async function HomePage() {
   ]);
 
   const store = settings ?? {
-    storeName: "Da liquor-store",
+    storeName: "Da-Liquorstore",
     tagline: "Fine spirits, local pickup",
     address: "69 Drug Runner Ave Gotham",
     phone: "420-697-6969",

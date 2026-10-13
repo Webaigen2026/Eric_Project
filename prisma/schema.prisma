@@ -10,11 +10,14 @@ datasource db {
 }
 
 model AdminUser {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String    @id @default(cuid())
+  email        String    @unique
   passwordHash String
   name         String?
-  createdAt    DateTime @default(now())
+  otpHash      String?
+  otpExpiresAt DateTime?
+  otpPurpose   String?
+  createdAt    DateTime  @default(now())
 }
 
 model Customer {
@@ -26,6 +29,7 @@ model Customer {
   emailVerified Boolean   @default(false)
   otpHash       String?
   otpExpiresAt  DateTime?
+  otpPurpose   String?
   createdAt     DateTime  @default(now())
   orders        Order[]
 }
@@ -86,7 +90,7 @@ model StoredImage {
 
 model StoreSettings {
   id                 String @id @default("default")
-  storeName          String @default("Da liquor-store")
+  storeName          String @default("Da-Liquorstore")
   tagline            String @default("Fine spirits, local pickup")
   address            String @default("124 Harbor Street, Riverton")
   phone              String @default("(555) 014-8820")

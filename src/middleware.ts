@@ -9,7 +9,12 @@ export default auth((req) => {
   const role = req.auth?.user?.role;
   const isLoggedIn = !!req.auth?.user;
 
-  if (path.startsWith("/admin") && path !== "/admin/login") {
+  const adminPublic =
+    path === "/admin/login" ||
+    path === "/admin/forgot-password" ||
+    path === "/admin/reset-password";
+
+  if (path.startsWith("/admin") && !adminPublic) {
     if (role !== "admin") {
       return NextResponse.redirect(new URL("/admin/login", req.nextUrl.origin));
     }

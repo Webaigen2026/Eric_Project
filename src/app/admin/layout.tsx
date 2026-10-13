@@ -8,6 +8,7 @@ const links = [
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/customers", label: "Accounts" },
+  { href: "/admin/staff", label: "Staff" },
   { href: "/admin/settings", label: "Settings" },
 ];
 
@@ -36,7 +37,7 @@ export default async function AdminLayout({
         <div className="mx-auto flex h-14 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4">
           <div className="flex items-center gap-5">
             <Link href="/admin" className="text-sm text-[var(--ink)]">
-              Da liquor-store
+              Da-Liquorstore
             </Link>
             <nav className="flex flex-wrap gap-4 text-sm text-[var(--ink-muted)]">
               {links.map((l) => (

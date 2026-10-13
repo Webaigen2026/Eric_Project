@@ -20,7 +20,7 @@ export async function GET() {
   return NextResponse.json({
     settings: settings ?? {
       id: "default",
-      storeName: "Da liquor-store",
+      storeName: "Da-Liquorstore",
       tagline: "Fine spirits, local pickup",
       address: "",
       phone: "",

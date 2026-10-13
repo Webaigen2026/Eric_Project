@@ -41,10 +41,11 @@ export async function POST(req: Request) {
       data: {
         otpHash,
         otpExpiresAt: otpExpiryDate(),
+        otpPurpose: "verify",
       },
     });
 
-    const mail = await sendOtpEmail(email, otp, customer.name);
+    const mail = await sendOtpEmail(email, otp, customer.name, "verify");
 
     return NextResponse.json({
       ok: true,

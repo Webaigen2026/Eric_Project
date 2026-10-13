@@ -16,8 +16,8 @@ const body = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: {
-    default: "Da liquor-store",
-    template: "%s · Da liquor-store",
+    default: "Da-Liquorstore",
+    template: "%s · Da-Liquorstore",
   },
   description: "Fine spirits and wine — hold online, pick up in store.",
 };
