@@ -318,6 +318,80 @@ textarea.field {
   color: #1f0f3d;
 }
 
+.shop-search {
+  display: flex;
+  width: 100%;
+  max-width: 36rem;
+  align-items: stretch;
+  gap: 0.75rem;
+}
+
+.shop-search-input {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 3rem;
+  margin: 0;
+  padding: 0 0.9rem;
+  border: 2px solid var(--line);
+  background: #101010;
+  color: var(--ink);
+  font-family: var(--font-body), "Outfit", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.shop-search-input::-webkit-search-decoration,
+.shop-search-input::-webkit-search-cancel-button,
+.shop-search-input::-webkit-search-results-button,
+.shop-search-input::-webkit-search-results-decoration {
+  display: none;
+}
+
+.shop-search-input:focus {
+  border-color: #8eb4dc;
+  outline: none;
+}
+
+.shop-search-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  margin: 0;
+  padding: 0 1.2rem;
+  border: 2px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-nav), "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.shop-search-btn:hover {
+  border-color: #8a8378;
+}
+
+@media (max-width: 639px) {
+  .shop-search {
+    flex-direction: column;
+    max-width: none;
+  }
+
+  .shop-search-input,
+  .shop-search-btn {
+    width: 100%;
+  }
+}
+
 .admin-shell table {
   font-size: 1.1rem;
 }

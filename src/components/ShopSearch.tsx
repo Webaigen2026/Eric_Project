@@ -28,16 +28,17 @@ export function ShopSearch({
   }
 
   return (
-    <form className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center" onSubmit={onSubmit}>
+    <form className="shop-search mt-8" onSubmit={onSubmit}>
       <input
         type="search"
         name="q"
         defaultValue={q ?? ""}
-        placeholder="Search"
-        className="field mt-0 sm:max-w-sm"
+        placeholder="Search products"
+        className="shop-search-input"
         onChange={(event) => go(event.target.value)}
+        aria-label="Search products"
       />
-      <button type="submit" className="btn btn-quiet">
+      <button type="submit" className="shop-search-btn">
         Search
       </button>
     </form>

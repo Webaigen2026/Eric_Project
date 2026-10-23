@@ -42,7 +42,7 @@ export default async function ShopPage({ searchParams }: Props) {
 
       <ShopSearch q={q} category={category} />
 
-      <div className="mt-4 flex flex-wrap gap-1 border-b border-[var(--line)]">
+      <div className="mt-6 flex flex-wrap items-center gap-2 border-b-2 border-[var(--line)] pb-4">
         <Link href="/shop" className={!category ? "chip chip-active" : "chip"}>
           All
         </Link>
@@ -58,11 +58,11 @@ export default async function ShopPage({ searchParams }: Props) {
       </div>
 
       {list.length === 0 ? (
-        <p className="py-12 text-sm text-[var(--ink-muted)]">
+        <p className="py-14 text-base text-[var(--ink-muted)]">
           No products match your search.
         </p>
       ) : (
-        <div className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+        <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5">
           {list.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
