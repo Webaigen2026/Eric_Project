@@ -22,20 +22,20 @@ export function StoreHeader({ storeName, announcement }: Props) {
 
   return (
     <header className="px-3 pt-3">
-      <div className="store-nav mx-auto max-w-6xl overflow-hidden rounded-2xl border border-[#6d45a3] bg-[#3d1b6e] shadow-[0_8px_24px_rgba(0,0,0,0.28)]">
+      <div className="store-nav mx-auto max-w-6xl overflow-hidden rounded-2xl border-2 border-[#a78bfa] bg-[#1f0f3d] shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
       {announcement ? (
-        <div className="border-b border-[#6d45a3] px-4 py-1.5 text-center text-xs">
+        <div className="border-b-2 border-[#7c5cbf] px-4 py-2 text-center text-sm font-medium text-[#c4b5fd]">
           {announcement}
         </div>
       ) : null}
-      <div className="flex h-14 items-center justify-between gap-3 px-4">
+      <div className="flex h-16 items-center justify-between gap-3 px-5">
         <Link
           href="/"
-          className="min-w-0 truncate font-[family-name:var(--font-display)] text-xl font-medium tracking-tight"
+          className="min-w-0 truncate font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight sm:text-3xl"
         >
           {storeName}
         </Link>
-        <nav className="flex shrink-0 items-center gap-3 text-sm sm:gap-4">
+        <nav className="flex shrink-0 items-center gap-3 text-base font-semibold sm:gap-5 sm:text-lg">
           <Link href="/shop">
             Shop
           </Link>

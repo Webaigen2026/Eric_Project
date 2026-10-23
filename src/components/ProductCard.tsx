@@ -18,7 +18,7 @@ export function ProductCard({ product }: Props) {
   return (
     <Link
       href={`/shop/${product.slug}`}
-      className="group block border border-[var(--line)] bg-[var(--cream-card)] hover:border-[#4a453e]"
+      className="group block border border-[var(--line)] bg-[var(--cream-card)] hover:border-[#8eb4dc]"
     >
       <div className="relative aspect-square overflow-hidden bg-[#161616]">
         {product.imageUrl ? (
@@ -30,23 +30,23 @@ export function ProductCard({ product }: Props) {
           />
         ) : (
           <div className="flex h-full items-end p-3">
-            <span className="text-xs text-[var(--ink-muted)]">
+            <span className="text-sm font-semibold text-[var(--ink-muted)]">
               {product.category}
             </span>
           </div>
         )}
         {outOfStock ? (
-          <span className="absolute left-2 top-2 bg-black/80 px-1.5 py-0.5 text-xs text-[var(--ink-muted)]">
+          <span className="absolute left-2 top-2 bg-black/80 px-2 py-1 text-sm font-semibold text-[var(--ink-muted)]">
             Unavailable
           </span>
         ) : null}
       </div>
       <div className="px-3 py-3">
-        <p className="text-xs text-[var(--ink-muted)]">{product.category}</p>
-        <h3 className="mt-0.5 truncate text-[0.95rem] text-[var(--ink)]">
+        <p className="text-sm font-semibold text-[var(--ink-muted)]">{product.category}</p>
+        <h3 className="mt-0.5 truncate text-lg font-semibold text-[var(--ink)]">
           {product.name}
         </h3>
-        <p className="mt-1 text-sm text-[var(--ink-muted)]">
+        <p className="mt-1 text-base font-semibold text-[var(--ink)]">
           {formatPrice(product.priceCents)}
         </p>
       </div>
