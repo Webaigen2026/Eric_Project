@@ -35,7 +35,7 @@ export function StoreHeader({ storeName, announcement }: Props) {
         >
           {storeName}
         </Link>
-        <nav className="flex shrink-0 items-center gap-3 text-base font-semibold sm:gap-5 sm:text-lg">
+        <nav className="flex shrink-0 items-center gap-3 text-lg font-semibold sm:gap-5 sm:text-xl">
           <Link href="/shop">
             Shop
           </Link>

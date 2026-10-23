@@ -36,7 +36,7 @@ export default async function StoreLayout({
     <AuthProvider>
       <AgeGate>
         <CartProvider>
-          <div className="flex min-h-screen flex-col">
+          <div className="storefront flex min-h-screen flex-col">
             <StoreHeader
               storeName={settings.storeName}
               announcement={settings.announcementBanner || undefined}

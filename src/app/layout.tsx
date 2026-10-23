@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Source_Sans_3 } from "next/font/google";
+import {
+  Archivo,
+  Barlow_Condensed,
+  Cormorant_Garamond,
+  IBM_Plex_Sans,
+  Outfit,
+  Space_Grotesk,
+} from "next/font/google";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -8,10 +15,34 @@ const display = Cormorant_Garamond({
   weight: ["400", "500", "600", "700"],
 });
 
-const body = Source_Sans_3({
+const body = Outfit({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const nav = Space_Grotesk({
+  variable: "--font-nav",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const product = Archivo({
+  variable: "--font-product",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const admin = IBM_Plex_Sans({
+  variable: "--font-admin",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const kicker = Barlow_Condensed({
+  variable: "--font-kicker",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -28,7 +59,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} h-full`}>
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${nav.variable} ${product.variable} ${admin.variable} ${kicker.variable} h-full`}
+    >
       <body className="min-h-full antialiased">{children}</body>
     </html>
   );

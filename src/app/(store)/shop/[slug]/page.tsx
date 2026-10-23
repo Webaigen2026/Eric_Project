@@ -21,21 +21,21 @@ export default async function ProductPage({ params }: Props) {
   const available = await getAvailableStock(product.id, product.stockOnHand);
 
   return (
-    <div className="page">
-      <Link href="/shop" className="text-sm text-[var(--ink-muted)] hover:text-[var(--ink)]">
+    <div className="product-detail page">
+      <Link href="/shop" className="text-base text-[var(--ink-muted)] hover:text-[var(--ink)]">
         Back to shop
       </Link>
       <div className="mt-4 grid gap-8 md:grid-cols-2">
-        <div className="aspect-square overflow-hidden bg-[#161616]">
+        <div className="aspect-square overflow-hidden rounded-2xl border-[3px] border-[#d0d0d0] bg-white">
           {product.imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={product.imageUrl}
               alt={product.name}
-              className="h-full w-full object-cover"
+              className="h-full w-full rounded-[0.85rem] object-cover"
             />
           ) : (
-            <div className="flex h-full items-end p-4 text-sm text-[var(--ink-muted)]">
+            <div className="flex h-full items-end p-4 text-base text-[#555555]">
               {product.category}
             </div>
           )}
@@ -43,8 +43,10 @@ export default async function ProductPage({ params }: Props) {
         <div>
           <p className="kicker">{product.category}</p>
           <h1 className="page-title mt-2">{product.name}</h1>
-          <p className="mt-3 text-[var(--ink)]">{formatPrice(product.priceCents)}</p>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--ink-muted)]">
+          <p className="mt-3 text-2xl font-semibold text-[var(--ink)]">
+            {formatPrice(product.priceCents)}
+          </p>
+          <p className="mt-4 max-w-md text-lg leading-relaxed text-[var(--ink-muted)]">
             {product.description || "No description yet."}
           </p>
           <div className="mt-6">
@@ -59,7 +61,7 @@ export default async function ProductPage({ params }: Props) {
               }}
             />
           </div>
-          <p className="mt-4 max-w-md text-sm text-[var(--ink-muted)]">
+          <p className="mt-4 max-w-md text-base text-[var(--ink-muted)]">
             Reserved for in-store pickup. Pay at the counter when you arrive.
           </p>
         </div>

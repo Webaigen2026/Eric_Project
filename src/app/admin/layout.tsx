@@ -24,7 +24,7 @@ export default async function AdminLayout({
   if (!session?.user) {
     return (
       <AuthProvider>
-        <div className="min-h-screen bg-black text-[var(--ink)]">
+        <div className="admin-shell min-h-screen bg-black text-[var(--ink)]">
           {children}
         </div>
       </AuthProvider>
@@ -32,14 +32,14 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--ink)]">
+    <div className="admin-shell min-h-screen bg-[var(--background)] text-[var(--ink)]">
       <header className="border-b border-[var(--line)]">
-        <div className="mx-auto flex h-14 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4">
+        <div className="mx-auto flex h-16 max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4">
           <div className="flex items-center gap-5">
-            <Link href="/admin" className="text-sm text-[var(--ink)]">
+            <Link href="/admin" className="text-lg font-semibold text-[var(--ink)]">
               Da-Liquorstore
             </Link>
-            <nav className="flex flex-wrap gap-4 text-sm text-[var(--ink-muted)]">
+            <nav className="flex flex-wrap gap-4 text-base text-[var(--ink-muted)]">
               {links.map((l) => (
                 <Link key={l.href} href={l.href} className="hover:text-[var(--ink)]">
                   {l.label}
@@ -47,7 +47,7 @@ export default async function AdminLayout({
               ))}
             </nav>
           </div>
-          <div className="flex items-center gap-4 text-sm text-[var(--ink-muted)]">
+          <div className="flex items-center gap-4 text-base text-[var(--ink-muted)]">
             <Link href="/" className="hover:text-[var(--ink)]">
               View store
             </Link>

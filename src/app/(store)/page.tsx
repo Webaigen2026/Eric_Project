@@ -32,7 +32,7 @@ export default async function HomePage() {
       <section className="border-b border-[var(--line)]">
         <div className="page !pb-8">
           <p className="kicker">{store.address}</p>
-          <h1 className="page-title mt-2 text-3xl md:text-4xl">{store.storeName}</h1>
+          <h1 className="page-title mt-2 md:text-5xl">{store.storeName}</h1>
           <p className="lede">
             {store.tagline}. Choose a pickup time. The reservation lasts two
             hours after that, and you pay when you pick the bottles up. Nothing
@@ -51,10 +51,10 @@ export default async function HomePage() {
 
       <section className="page !pt-8">
         <div className="mb-5 flex items-baseline justify-between gap-4">
-          <h2 className="text-base text-[var(--ink)]">From the shelf</h2>
+          <h2 className="section-title">From the shelf</h2>
           <Link
             href="/shop"
-            className="text-sm text-[var(--ink-muted)] hover:text-[var(--ink)]"
+            className="text-base text-[var(--ink-muted)] hover:text-[var(--ink)]"
           >
             View all
           </Link>
@@ -69,27 +69,27 @@ export default async function HomePage() {
       <section id="pickup" className="border-t border-[var(--line)]">
         <div className="page grid gap-10 md:grid-cols-2">
           <div>
-            <h2 className="text-base text-[var(--ink)]">Reserve and pickup</h2>
+            <h2 className="section-title">Reserve and pickup</h2>
             <p className="lede">
               Alcohol cannot be bought online in Massachusetts. The hold lasts
               two hours after the pickup time you choose, then you pay at the
               counter.
             </p>
-            <ol className="mt-5 space-y-2 text-sm text-[var(--ink-muted)]">
+            <ol className="mt-5 space-y-3 text-base text-[var(--ink-muted)]">
               <li>1. Add bottles to your cart.</li>
               <li>2. Reserve them with your name and a pickup time.</li>
               <li>3. Come in, show your order number, and pay at the counter.</li>
             </ol>
           </div>
-          <div className="text-sm">
+          <div className="text-base">
             <h3 className="kicker">Find us</h3>
-            <p className="mt-2 whitespace-pre-line text-[var(--ink)]">
+            <p className="mt-2 whitespace-pre-line text-lg text-[var(--ink)]">
               {store.address}
               {"\n"}
               {store.phone}
             </p>
             <h3 className="kicker mt-6">Hours</h3>
-            <p className="mt-2 whitespace-pre-line text-[var(--ink-muted)]">
+            <p className="mt-2 whitespace-pre-line text-lg text-[var(--ink-muted)]">
               {store.hours}
             </p>
           </div>

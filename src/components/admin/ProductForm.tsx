@@ -213,18 +213,18 @@ export function ProductForm({
           </button>
           <div
             tabIndex={0}
-            className="mt-3 aspect-square w-full max-w-64 overflow-hidden border border-[var(--line)] bg-[#161616] outline-none focus-visible:border-[var(--ink)]"
+            className="mt-3 aspect-square w-full max-w-64 overflow-hidden rounded-2xl border-[3px] border-[#d0d0d0] bg-white outline-none focus-visible:border-white"
           >
             {imageUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={imageUrl}
                 alt=""
-                className="h-full w-full object-cover"
+                className="h-full w-full rounded-[0.85rem] object-cover"
               />
             ) : (
               <div className="flex h-full items-end p-3">
-                <span className="text-xs text-[var(--ink-muted)]">
+                <span className="text-sm text-[#555555]">
                   {uploading ? "Uploading…" : "Paste an image"}
                 </span>
               </div>
