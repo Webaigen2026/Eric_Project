@@ -28,8 +28,8 @@ export function AddToCartButton({ product }: Props) {
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <label className="flex items-center gap-2 text-sm">
+    <div className="flex flex-wrap items-end gap-3">
+      <label className="label">
         Qty
         <input
           type="number"
@@ -44,7 +44,7 @@ export function AddToCartButton({ product }: Props) {
               )
             )
           }
-          className="field mt-0 w-16"
+          className="field mt-2 w-20"
         />
       </label>
       <button
@@ -63,13 +63,13 @@ export function AddToCartButton({ product }: Props) {
           setAdded(true);
           setTimeout(() => setAdded(false), 2000);
         }}
-        className="btn btn-primary"
+        className="btn btn-primary min-w-[10rem]"
       >
-        {added ? "Added to cart" : "Add to cart"}
+        {added ? "Added" : "Add to cart"}
       </button>
-      <span className="text-sm text-[var(--ink-muted)]">
+      <p className="pb-2 text-sm text-[var(--ink-muted)]">
         {product.available} available
-      </span>
+      </p>
     </div>
   );
 }

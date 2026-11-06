@@ -9,7 +9,7 @@ export default async function HomePage() {
     prisma.product.findMany({
       where: { isActive: true },
       orderBy: { name: "asc" },
-      take: 4,
+      take: 8,
     }),
   ]);
 
@@ -26,70 +26,98 @@ export default async function HomePage() {
     ...p,
     available: Math.max(0, p.stockOnHand - (held.get(p.id) ?? 0)),
   }));
+  const heroProduct = featured.find((p) => p.imageUrl) ?? featured[0];
 
   return (
     <>
-      <section className="border-b border-[var(--line)]">
-        <div className="page !pb-8">
-          <p className="kicker">{store.address}</p>
-          <h1 className="page-title mt-2 md:text-5xl">{store.storeName}</h1>
-          <p className="lede">
-            {store.tagline}. Choose a pickup time. The reservation lasts two
-            hours after that, and you pay when you pick the bottles up. Nothing
-            is sold online.
+      <section className="relative min-h-[78vh] overflow-hidden border-b border-[var(--line)]">
+        <div className="absolute inset-0">
+          {heroProduct?.imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={heroProduct.imageUrl}
+              alt=""
+              className="h-full w-full object-cover opacity-35 animate-fade"
+            />
+          ) : (
+            <div className="h-full w-full bg-[radial-gradient(circle_at_70%_40%,#3a2f22,transparent_55%)]" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0b0a08] via-[#0b0a08]/88 to-[#0b0a08]/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0b0a08] via-transparent to-[#0b0a08]/45" />
+        </div>
+
+        <div className="page relative flex min-h-[78vh] flex-col justify-end !pb-16 !pt-28">
+          <p className="kicker animate-rise">{store.storeName}</p>
+          <h1 className="page-title mt-3 max-w-3xl animate-rise-delay">
+            Hold online. Pick up in store.
+          </h1>
+          <p className="lede mt-4 max-w-xl animate-rise-delay">
+            Reserve bottles for local pickup. Pay at the counter when you arrive.
           </p>
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="mt-8 flex flex-wrap gap-3 animate-rise-delay">
             <Link href="/shop" className="btn btn-primary">
-              Shop
+              Shop the shelf
             </Link>
             <a href="#pickup" className="btn btn-quiet">
-              Pickup info
+              How pickup works
             </a>
           </div>
         </div>
       </section>
 
-      <section className="page !pt-8">
-        <div className="mb-5 flex items-baseline justify-between gap-4">
-          <h2 className="section-title">From the shelf</h2>
+      <section className="page !pt-14">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <p className="kicker">Featured</p>
+            <h2 className="section-title mt-2">From the shelf</h2>
+          </div>
           <Link
             href="/shop"
-            className="text-base text-[var(--ink-muted)] hover:text-[var(--ink)]"
+            className="text-sm text-[var(--ink-muted)] hover:text-[var(--ink)]"
           >
             View all
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-          {featured.map((product) => (
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+          {featured.slice(0, 4).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>
 
-      <section id="pickup" className="border-t border-[var(--line)]">
-        <div className="page grid gap-10 md:grid-cols-2">
+      <section id="pickup" className="mt-8 border-t border-[var(--line)] bg-[rgba(255,255,255,0.015)]">
+        <div className="page grid gap-12 md:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <h2 className="section-title">Reserve and pickup</h2>
+            <p className="kicker">Pickup</p>
+            <h2 className="section-title mt-2">Reserve and collect</h2>
             <p className="lede">
-              Alcohol cannot be bought online in Massachusetts. The hold lasts
-              two hours after the pickup time you choose, then you pay at the
-              counter.
+              In Massachusetts you cannot buy alcohol online. Reserve your
+              bottles, choose a pickup time, and pay in store.
             </p>
-            <ol className="mt-5 space-y-3 text-base text-[var(--ink-muted)]">
-              <li>1. Add bottles to your cart.</li>
-              <li>2. Reserve them with your name and a pickup time.</li>
-              <li>3. Come in, show your order number, and pay at the counter.</li>
+            <ol className="mt-8 space-y-5">
+              {[
+                "Add bottles to your cart.",
+                "Reserve with your name and a pickup time.",
+                "Show your order number and pay at the counter.",
+              ].map((step, index) => (
+                <li key={step} className="flex gap-4 text-[var(--ink)]">
+                  <span className="font-[family-name:var(--font-display)] text-2xl text-[var(--amber)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="pt-1 text-base text-[var(--ink-muted)]">{step}</span>
+                </li>
+              ))}
             </ol>
           </div>
-          <div className="text-base">
-            <h3 className="kicker">Find us</h3>
-            <p className="mt-2 whitespace-pre-line text-lg text-[var(--ink)]">
+          <div className="border border-[var(--line)] bg-[var(--surface)] p-6 md:p-8">
+            <h3 className="kicker">Visit</h3>
+            <p className="mt-3 whitespace-pre-line text-lg text-[var(--ink)]">
               {store.address}
               {"\n"}
               {store.phone}
             </p>
-            <h3 className="kicker mt-6">Hours</h3>
-            <p className="mt-2 whitespace-pre-line text-lg text-[var(--ink-muted)]">
+            <h3 className="kicker mt-8">Hours</h3>
+            <p className="mt-3 whitespace-pre-line text-base text-[var(--ink-muted)]">
               {store.hours}
             </p>
           </div>

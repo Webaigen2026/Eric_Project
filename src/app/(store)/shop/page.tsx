@@ -37,12 +37,19 @@ export default async function ShopPage({ searchParams }: Props) {
 
   return (
     <div className="page">
-      <h1 className="page-title">Shop</h1>
-      <p className="lede">Select bottles to reserve for in-store pickup.</p>
+      <div className="max-w-2xl">
+        <p className="kicker">Catalog</p>
+        <h1 className="page-title mt-2">Shop</h1>
+        <p className="lede">
+          Browse the shelf, reserve what you want, and pick it up in store.
+        </p>
+      </div>
 
-      <ShopSearch q={q} category={category} />
+      <div className="mt-10">
+        <ShopSearch q={q} category={category} />
+      </div>
 
-      <div className="mt-6 flex flex-wrap items-center gap-2 border-b-2 border-[var(--line)] pb-4">
+      <div className="mt-8 flex flex-wrap items-center gap-2 border-b border-[var(--line)] pb-5">
         <Link href="/shop" className={!category ? "chip chip-active" : "chip"}>
           All
         </Link>
@@ -58,11 +65,11 @@ export default async function ShopPage({ searchParams }: Props) {
       </div>
 
       {list.length === 0 ? (
-        <p className="py-14 text-base text-[var(--ink-muted)]">
+        <p className="py-16 text-base text-[var(--ink-muted)]">
           No products match your search.
         </p>
       ) : (
-        <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-5">
+        <div className="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 md:gap-6">
           {list.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

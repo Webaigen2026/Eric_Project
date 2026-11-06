@@ -11,10 +11,11 @@ export default function CartPage() {
   if (itemCount === 0) {
     return (
       <div className="page page-narrow">
-        <h1 className="page-title">Your cart is empty</h1>
-        <p className="lede">Browse the shelf and add bottles to reserve for pickup.</p>
-        <Link href="/shop" className="btn btn-primary mt-5">
-          Shop
+        <p className="kicker">Cart</p>
+        <h1 className="page-title mt-2">Your cart is empty</h1>
+        <p className="lede">Browse the shelf and reserve bottles for pickup.</p>
+        <Link href="/shop" className="btn btn-primary mt-8">
+          Shop the shelf
         </Link>
       </div>
     );
@@ -22,26 +23,39 @@ export default function CartPage() {
 
   return (
     <div className="page max-w-3xl">
-      <h1 className="page-title">Cart</h1>
+      <p className="kicker">Cart</p>
+      <h1 className="page-title mt-2">Your reservation</h1>
       <p className="lede">
-        These items stay reserved for two hours after the pickup time you
-        choose. Pick them up in store and pay at the counter.
+        Items stay reserved for two hours after the pickup time you choose.
+        Pay at the counter when you arrive.
       </p>
 
-      <ul className="mt-6 divide-y divide-[var(--line)] border-y border-[var(--line)]">
+      <ul className="mt-10 divide-y divide-[var(--line)] border-y border-[var(--line)]">
         {items.map((item) => (
           <li
             key={item.productId}
-            className="flex flex-wrap items-center justify-between gap-3 py-3"
+            className="flex flex-wrap items-center gap-4 py-5"
           >
-            <div className="min-w-0">
+            <div className="product-media h-20 w-20 shrink-0 overflow-hidden rounded-lg">
+              {item.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={item.imageUrl}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="h-full w-full bg-[#f4f4f4]" />
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
               <Link
                 href={`/shop/${item.slug}`}
                 className="text-[var(--ink)] hover:underline"
               >
                 {item.name}
               </Link>
-              <p className="text-sm text-[var(--ink-muted)]">
+              <p className="mt-1 text-sm text-[var(--ink-muted)]">
                 {formatPrice(item.priceCents)} each
               </p>
             </div>
@@ -57,8 +71,9 @@ export default function CartPage() {
                   )
                 }
                 className="field mt-0 w-16"
+                aria-label={`Quantity for ${item.name}`}
               />
-              <p className="w-16 text-right text-sm">
+              <p className="w-20 text-right text-sm text-[var(--ink)]">
                 {formatPrice(item.priceCents * item.quantity)}
               </p>
               <button
@@ -73,12 +88,15 @@ export default function CartPage() {
         ))}
       </ul>
 
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm">
-          Subtotal <span className="text-[var(--ink)]">{formatPrice(subtotalCents)}</span>
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+        <p className="text-base">
+          Subtotal{" "}
+          <span className="font-[family-name:var(--font-display)] text-2xl text-[var(--ink)]">
+            {formatPrice(subtotalCents)}
+          </span>
         </p>
         <Link href="/checkout" className="btn btn-primary">
-          Reserve
+          Continue to pickup
         </Link>
       </div>
     </div>

@@ -22,34 +22,39 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="product-detail page">
-      <Link href="/shop" className="text-base text-[var(--ink-muted)] hover:text-[var(--ink)]">
+      <Link
+        href="/shop"
+        className="text-sm text-[var(--ink-muted)] transition-colors hover:text-[var(--ink)]"
+      >
         Back to shop
       </Link>
-      <div className="mt-4 grid gap-8 md:grid-cols-2">
-        <div className="aspect-square overflow-hidden rounded-2xl border-[3px] border-[#d0d0d0] bg-white">
+
+      <div className="mt-6 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="product-media aspect-square w-full">
           {product.imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={product.imageUrl}
               alt={product.name}
-              className="h-full w-full rounded-[0.85rem] object-cover"
+              className="h-full w-full object-cover"
             />
           ) : (
-            <div className="flex h-full items-end p-4 text-base text-[#555555]">
+            <div className="flex h-full items-end p-6 text-base text-[#666666]">
               {product.category}
             </div>
           )}
         </div>
-        <div>
+
+        <div className="lg:sticky lg:top-8 lg:pt-2">
           <p className="kicker">{product.category}</p>
-          <h1 className="page-title mt-2">{product.name}</h1>
-          <p className="mt-3 text-2xl font-semibold text-[var(--ink)]">
+          <h1 className="page-title mt-3">{product.name}</h1>
+          <p className="mt-4 font-[family-name:var(--font-display)] text-3xl text-[var(--amber)]">
             {formatPrice(product.priceCents)}
           </p>
-          <p className="mt-4 max-w-md text-lg leading-relaxed text-[var(--ink-muted)]">
+          <p className="mt-5 max-w-md text-base leading-relaxed text-[var(--ink-muted)]">
             {product.description || "No description yet."}
           </p>
-          <div className="mt-6">
+          <div className="mt-8 border-t border-[var(--line)] pt-8">
             <AddToCartButton
               product={{
                 id: product.id,
@@ -61,8 +66,9 @@ export default async function ProductPage({ params }: Props) {
               }}
             />
           </div>
-          <p className="mt-4 max-w-md text-base text-[var(--ink-muted)]">
-            Reserved for in-store pickup. Pay at the counter when you arrive.
+          <p className="mt-5 max-w-md text-sm text-[var(--ink-muted)]">
+            Reserved for in-store pickup. The hold lasts two hours after your
+            pickup time. Pay at the counter when you arrive.
           </p>
         </div>
       </div>

@@ -21,24 +21,21 @@ export function StoreHeader({ storeName, announcement }: Props) {
   }
 
   return (
-    <header className="px-3 pt-3">
-      <div className="store-nav mx-auto max-w-6xl overflow-hidden rounded-2xl border-2 border-[#a78bfa] bg-[#1f0f3d] shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+    <header className="relative z-20 border-b border-[var(--line)] bg-[var(--nav)] backdrop-blur-xl">
       {announcement ? (
-        <div className="border-b-2 border-[#7c5cbf] px-4 py-2 text-center text-sm font-medium text-[#c4b5fd]">
+        <div className="border-b border-[var(--line)] bg-[rgba(198,165,106,0.08)] px-5 py-2 text-center text-sm text-[var(--amber-light)]">
           {announcement}
         </div>
       ) : null}
-      <div className="flex h-16 items-center justify-between gap-3 px-5">
+      <div className="store-nav mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-4 px-5">
         <Link
           href="/"
-          className="min-w-0 truncate font-[family-name:var(--font-display)] text-2xl font-semibold tracking-tight sm:text-3xl"
+          className="min-w-0 truncate font-[family-name:var(--font-display)] text-[1.7rem] font-semibold tracking-tight sm:text-[1.95rem]"
         >
           {storeName}
         </Link>
-        <nav className="flex shrink-0 items-center gap-3 text-lg font-semibold sm:gap-5 sm:text-xl">
-          <Link href="/shop">
-            Shop
-          </Link>
+        <nav className="flex shrink-0 items-center gap-5 text-[0.92rem] sm:gap-7 sm:text-[0.98rem]">
+          <Link href="/shop">Shop</Link>
           <Link href="/#pickup" className="hidden sm:inline">
             Pickup
           </Link>
@@ -56,18 +53,13 @@ export function StoreHeader({ storeName, announcement }: Props) {
               </button>
             </>
           ) : (
-            <Link href="/login">
-              Login
-            </Link>
+            <Link href="/login">Login</Link>
           )}
           <Link href="/cart" className="btn">
             Cart
-            {itemCount > 0 ? (
-              <span className="ml-2">{itemCount}</span>
-            ) : null}
+            {itemCount > 0 ? <span className="ml-2">{itemCount}</span> : null}
           </Link>
         </nav>
-      </div>
       </div>
     </header>
   );

@@ -1,18 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #c5dbf5;
-  --ink-muted: #a8c4e8;
-  --cream: #090909;
-  --cream-card: #111111;
+  --ink: #f4efe6;
+  --ink-muted: #b7aea0;
+  --cream: #0b0a08;
+  --cream-card: #13110e;
   --cream-muted: #b0a89e;
-  --forest: #e0c089;
-  --forest-deep: #090909;
-  --amber: #e0c089;
-  --amber-light: #ebd4a4;
-  --line: #5a5a5a;
-  --background: #090909;
-  --foreground: #c5dbf5;
+  --forest: #c6a56a;
+  --forest-deep: #0b0a08;
+  --amber: #c6a56a;
+  --amber-light: #d8bb86;
+  --line: #2a2620;
+  --line-strong: #433e35;
+  --background: #0b0a08;
+  --foreground: #f4efe6;
+  --surface: #12100d;
+  --nav: rgba(14, 12, 10, 0.88);
   --font-display: Georgia, "Times New Roman", Times, serif;
   --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-nav: "Avenir Next", "Segoe UI", system-ui, sans-serif;
@@ -33,12 +36,16 @@ html {
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(1100px 520px at 85% -8%, rgba(198, 165, 106, 0.14), transparent 55%),
+    radial-gradient(900px 480px at 0% 18%, rgba(255, 248, 235, 0.04), transparent 50%),
+    var(--background);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: 17px;
   line-height: 1.55;
-  font-weight: 500;
+  font-weight: 450;
 }
 
 ::selection {
@@ -46,14 +53,13 @@ body {
   color: var(--ink);
 }
 
-/* Area fonts */
 .storefront {
   font-family: var(--font-body);
 }
 
 .admin-shell {
   font-family: var(--font-admin);
-  font-size: 1.125rem;
+  font-size: 1.05rem;
 }
 
 .product-card,
@@ -65,71 +71,97 @@ body {
   font-family: var(--font-nav);
 }
 
-/* Thicker borders site-wide */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-rise {
+  animation: rise-in 0.7s ease both;
+}
+
+.animate-rise-delay {
+  animation: rise-in 0.7s ease 0.12s both;
+}
+
+.animate-fade {
+  animation: fade-in 0.9s ease both;
+}
+
 .border {
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .border-b {
-  border-bottom-width: 2px;
+  border-bottom-width: 1px;
 }
 
 .border-t {
-  border-top-width: 2px;
+  border-top-width: 1px;
 }
 
 .border-y {
-  border-top-width: 2px;
-  border-bottom-width: 2px;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
 }
 
 .border-x {
-  border-left-width: 2px;
-  border-right-width: 2px;
+  border-left-width: 1px;
+  border-right-width: 1px;
 }
 
 .divide-y > :not([hidden]) ~ :not([hidden]) {
-  border-top-width: 2px;
+  border-top-width: 1px;
 }
 
-/* Larger Tailwind text utilities */
 .text-xs {
-  font-size: 1rem;
+  font-size: 0.8rem;
   line-height: 1.35;
 }
 
 .text-sm {
-  font-size: 1.125rem;
+  font-size: 0.95rem;
   line-height: 1.5;
 }
 
 .text-base {
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   line-height: 1.55;
 }
 
 .text-lg {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1.45;
 }
 
 .text-xl {
-  font-size: 1.65rem;
+  font-size: 1.4rem;
   line-height: 1.3;
 }
 
 .text-2xl {
-  font-size: 2rem;
+  font-size: 1.75rem;
   line-height: 1.25;
 }
 
 .text-3xl {
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   line-height: 1.15;
 }
 
 .text-4xl {
-  font-size: 3rem;
+  font-size: 2.75rem;
   line-height: 1.1;
 }
 
@@ -137,42 +169,43 @@ body {
   width: 100%;
   max-width: 72rem;
   margin-inline: auto;
-  padding: 2rem 1.1rem 3.75rem;
+  padding: 2.5rem 1.25rem 4.5rem;
 }
 
 .page-narrow {
-  max-width: 30rem;
+  max-width: 28rem;
 }
 
 .page-title {
   font-family: var(--font-display);
-  font-size: 2.75rem;
+  font-size: clamp(2.2rem, 4vw, 3.25rem);
   font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.12;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  color: var(--ink);
 }
 
 .section-title {
   font-family: var(--font-display);
-  font-size: 1.85rem;
+  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   color: var(--ink);
 }
 
 .lede {
-  margin-top: 0.55rem;
-  max-width: 38rem;
+  margin-top: 0.75rem;
+  max-width: 34rem;
   color: var(--ink-muted);
-  font-size: 1.25rem;
-  line-height: 1.55;
-  font-weight: 500;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 .kicker {
   font-family: var(--font-kicker);
-  font-size: 1.05rem;
-  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-muted);
   font-weight: 600;
@@ -182,17 +215,22 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 3rem;
-  padding: 0 1.2rem;
-  border: 2px solid transparent;
+  height: 2.85rem;
+  padding: 0 1.35rem;
+  border: 1px solid transparent;
   background: transparent;
   color: var(--ink);
   font-family: var(--font-nav);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  letter-spacing: 0.02em;
   line-height: 1;
   cursor: pointer;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
 }
 
 .btn:focus-visible,
@@ -218,12 +256,13 @@ a:focus-visible {
 }
 
 .btn-quiet {
-  border-color: var(--line);
+  border-color: var(--line-strong);
   color: var(--ink);
 }
 
 .btn-quiet:hover:not(:disabled) {
-  border-color: #8a8378;
+  border-color: var(--ink-muted);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .btn-block {
@@ -232,75 +271,82 @@ a:focus-visible {
 
 .field {
   width: 100%;
-  height: 3rem;
+  height: 2.85rem;
   margin-top: 0.4rem;
   padding: 0 0.9rem;
-  border: 2px solid var(--line);
-  background: #101010;
+  border: 1px solid var(--line-strong);
+  background: #0c0c0c;
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 450;
 }
 
 textarea.field {
   height: auto;
-  min-height: 7rem;
-  padding: 0.8rem 0.9rem;
+  min-height: 6.5rem;
+  padding: 0.75rem 0.9rem;
   resize: vertical;
 }
 
 .field:focus {
-  border-color: #8eb4dc;
+  border-color: var(--amber);
   outline: none;
 }
 
 .label {
   display: block;
   font-family: var(--font-kicker);
-  font-size: 1.05rem;
-  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-muted);
   font-weight: 600;
 }
 
 .form-error {
-  border: 2px solid #8a3a3a;
+  border: 1px solid #8a3a3a;
   background: #1a1010;
   color: #f0c4c4;
-  padding: 0.75rem 0.9rem;
-  font-size: 1.1rem;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
-  height: 2.35rem;
-  padding: 0 0.9rem;
-  border: 2px solid transparent;
+  height: 2.2rem;
+  padding: 0 0.85rem;
+  border: 1px solid transparent;
   color: var(--ink-muted);
   font-family: var(--font-nav);
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 560;
+  transition: color 140ms ease, border-color 140ms ease, background-color 140ms ease;
 }
 
 .chip:hover {
   color: var(--ink);
+  border-color: var(--line-strong);
 }
 
 .chip-active {
-  border-color: var(--line);
+  border-color: var(--ink-muted);
   color: var(--ink);
-  background: #141414;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .store-nav,
 .store-nav a,
 .store-nav button {
-  color: #e8f0ff;
-  font-weight: 600;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.store-nav a {
+  position: relative;
+  letter-spacing: 0.02em;
 }
 
 .store-nav a:hover,
@@ -309,42 +355,44 @@ textarea.field {
 }
 
 .store-nav .btn {
-  height: 2.75rem;
-  padding: 0 1.1rem;
-  border: 2px solid #93c5fd;
-  color: #e8f0ff;
+  height: 2.4rem;
+  padding: 0 1.05rem;
+  border: 1px solid var(--amber);
+  color: var(--amber);
   background: transparent;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .store-nav .btn:hover {
-  background: #93c5fd;
-  border-color: #93c5fd;
-  color: #1f0f3d;
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #15120e;
 }
 
 .shop-search {
   display: flex;
   width: 100%;
-  max-width: 36rem;
+  max-width: 34rem;
   align-items: stretch;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .shop-search-input {
   box-sizing: border-box;
   flex: 1 1 auto;
   min-width: 0;
-  height: 3rem;
+  height: 2.85rem;
   margin: 0;
   padding: 0 0.9rem;
-  border: 2px solid var(--line);
-  background: #101010;
+  border: 1px solid var(--line-strong);
+  background: #0c0c0c;
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 450;
   line-height: 1;
   appearance: none;
   -webkit-appearance: none;
@@ -358,7 +406,7 @@ textarea.field {
 }
 
 .shop-search-input:focus {
-  border-color: #8eb4dc;
+  border-color: var(--amber);
   outline: none;
 }
 
@@ -368,14 +416,14 @@ textarea.field {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  height: 3rem;
+  height: 2.85rem;
   margin: 0;
-  padding: 0 1.2rem;
-  border: 2px solid var(--line);
+  padding: 0 1.15rem;
+  border: 1px solid var(--line-strong);
   background: transparent;
   color: var(--ink);
   font-family: var(--font-nav);
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   line-height: 1;
   cursor: pointer;
@@ -383,7 +431,8 @@ textarea.field {
 }
 
 .shop-search-btn:hover {
-  border-color: #8a8378;
+  border-color: var(--ink-muted);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 @media (max-width: 639px) {
@@ -398,12 +447,27 @@ textarea.field {
   }
 }
 
+.product-media {
+  overflow: hidden;
+  border: 1px solid #d8d8d8;
+  border-radius: 1rem;
+  background: #ffffff;
+}
+
+.product-media img {
+  transition: transform 0.45s ease;
+}
+
+.group:hover .product-media img {
+  transform: scale(1.03);
+}
+
 .admin-shell table {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .admin-shell .page-title {
   font-family: var(--font-admin);
-  font-size: 2.25rem;
+  font-size: 2rem;
   letter-spacing: -0.01em;
 }
