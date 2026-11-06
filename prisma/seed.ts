@@ -120,16 +120,19 @@ const products: Array<{
 ];
 
 async function main() {
-  const passwordHash = await bcrypt.hash("123456", 10);
+  const passwordHash = await bcrypt.hash("Sasuke23!23!", 10);
 
   await prisma.adminUser.upsert({
-    where: { email: "admin@goku.example" },
-    update: { passwordHash },
+    where: { email: "hagulababa@gmail.com" },
+    update: { passwordHash, name: "Baba" },
     create: {
-      email: "admin@goku.example",
+      email: "hagulababa@gmail.com",
       passwordHash,
-      name: "Store Owner",
+      name: "Baba",
     },
+  });
+  await prisma.adminUser.deleteMany({
+    where: { email: "admin@goku.example" },
   });
 
   const customerHash = await bcrypt.hash("customer123", 10);
@@ -194,7 +197,7 @@ async function main() {
     });
   }
 
-  console.log("Seeded admin (admin@goku.example / 123456)");
+  console.log("Seeded admin (hagulababa@gmail.com / Sasuke23!23!)");
   console.log("Seeded customer (customer@example.com / customer123)");
   console.log("Seeded settings and products.");
 }

@@ -49,8 +49,8 @@ Checkout requires a customer login. Staff use `/admin/login`.
 
 ### Seed admin
 
-- **Email:** `admin@goku.example`
-- **Password:** `123456`
+- **Email:** `hagulababa@gmail.com`
+- **Password:** `Sasuke23!23!`
 
 ## Customer flow
 

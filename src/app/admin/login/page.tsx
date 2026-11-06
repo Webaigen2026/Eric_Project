@@ -48,7 +48,7 @@ function LoginForm() {
               name="email"
               type="email"
               required
-              defaultValue="admin@goku.example"
+              defaultValue="hagulababa@gmail.com"
               className="field"
             />
           </label>
