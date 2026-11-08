@@ -163,7 +163,7 @@ async function main() {
       storeName: "Da-Liquorstore",
       tagline: "Fine spirits, local pickup",
       address: "69 Drug Runner Ave Gotham",
-      phone: "420-697-6969",
+      phone: "xxx-xxx-xxxx",
       email: "hello@emberandoak.example",
       hours: "Mon–Thu 10am–9pm\nFri–Sat 10am–11pm\nSun 12pm–7pm",
       announcementBanner: "Hold online, pick up same day — pay at the counter.",

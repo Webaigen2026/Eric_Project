@@ -59,6 +59,8 @@ model Order {
   notes             String      @default("")
   preferredPickupAt DateTime?
   expiresAt         DateTime?
+  pickedUpAt        DateTime?
+  statusChangedAt   DateTime?
   status            String      @default("pending")
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
@@ -66,6 +68,8 @@ model Order {
   items             OrderItem[]
 
   @@index([customerId])
+  @@index([status, pickedUpAt])
+  @@index([status, statusChangedAt])
 }
 
 model OrderItem {
@@ -93,7 +97,7 @@ model StoreSettings {
   storeName          String @default("Da-Liquorstore")
   tagline            String @default("Fine spirits, local pickup")
   address            String @default("124 Harbor Street, Riverton")
-  phone              String @default("(555) 014-8820")
+  phone              String @default("xxx-xxx-xxxx")
   email              String @default("hello@emberandoak.example")
   hours              String @default("Mon–Thu 10am–9pm\nFri–Sat 10am–11pm\nSun 12pm–7pm")
   announcementBanner String @default("")

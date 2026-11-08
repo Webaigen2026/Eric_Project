@@ -5,17 +5,15 @@ import { useEffect, useState, type ReactNode } from "react";
 const AGE_KEY = "ember-oak-age-verified";
 
 export function AgeGate({ children }: { children: ReactNode }) {
-  const [verified, setVerified] = useState<boolean | null>(null);
+  const [verified, setVerified] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setVerified(localStorage.getItem(AGE_KEY) === "yes");
+    setReady(true);
   }, []);
 
-  if (verified === null) {
-    return <div className="min-h-screen bg-[var(--background)]" />;
-  }
-
-  if (!verified) {
+  if (!ready || !verified) {
     return (
       <div className="flex min-h-screen items-center bg-[var(--background)] px-6">
         <div className="mx-auto w-full max-w-sm">
@@ -30,6 +28,7 @@ export function AgeGate({ children }: { children: ReactNode }) {
               onClick={() => {
                 localStorage.setItem(AGE_KEY, "yes");
                 setVerified(true);
+                setReady(true);
               }}
               className="btn btn-primary"
             >

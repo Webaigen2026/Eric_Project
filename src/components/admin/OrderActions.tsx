@@ -30,17 +30,29 @@ type Order = {
 const ACTIONS: Record<string, { label: string; next: string }[]> = {
   pending: [
     { label: "Mark ready", next: "ready" },
+    { label: "Mark picked up", next: "picked_up" },
     { label: "Cancel reservation", next: "cancelled" },
+    { label: "Mark expired", next: "expired" },
   ],
   ready: [
     { label: "Mark picked up", next: "picked_up" },
     { label: "Back to reserved", next: "pending" },
     { label: "Cancel reservation", next: "cancelled" },
+    { label: "Mark expired", next: "expired" },
   ],
   picked_up: [],
-  cancelled: [],
-  expired: [],
-};
+  cancelled: [
+    { label: "Mark picked up", next: "picked_up" },
+    { label: "Mark ready", next: "ready" },
+    { label: "Back to reserved", next: "pending" },
+  ],
+  expired: [
+    { label: "Mark picked up", next: "picked_up" },
+    { label: "Mark ready", next: "ready" },
+    { label: "Back to reserved", next: "pending" },
+    { label: "Cancel reservation", next: "cancelled" },
+  ],
+}
 
 export function OrderActions({ order }: { order: Order }) {
   const router = useRouter();
@@ -96,7 +108,7 @@ export function OrderActions({ order }: { order: Order }) {
               disabled={loading}
               onClick={() => setStatus(a.next)}
               className={`btn ${
-                a.next === "cancelled"
+                a.next === "cancelled" || a.next === "expired"
                   ? "btn-quiet !text-[#e7b4b4]"
                   : a.next === "ready" || a.next === "picked_up"
                     ? "btn-primary"

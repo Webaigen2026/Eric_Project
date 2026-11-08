@@ -1,21 +1,44 @@
 import Link from "next/link";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { OrderListActions } from "@/components/admin/OrderListActions";
+import {
+  OPEN_HOLD_STATUSES,
+  SHORT_DISPLAY_STATUSES,
+  recentStatusCutoff,
+} from "@/lib/stock";
 import { formatPrice, formatDateTime, statusLabel } from "@/lib/format";
 
 export const metadata = { title: "Orders" };
 
 type Props = { searchParams: Promise<{ status?: string }> };
 
+function ordersWhere(status?: string): Prisma.OrderWhereInput {
+  if (!status) {
+    // Current: open reservations only (picked up / cancelled / expired leave)
+    return { status: { in: [...OPEN_HOLD_STATUSES] } };
+  }
+  if (
+    (SHORT_DISPLAY_STATUSES as readonly string[]).includes(status)
+  ) {
+    return {
+      status,
+      statusChangedAt: { gte: recentStatusCutoff() },
+    };
+  }
+  return { status };
+}
+
 export default async function AdminOrdersPage({ searchParams }: Props) {
   const { status } = await searchParams;
   const orders = await prisma.order.findMany({
-    where: status ? { status } : undefined,
+    where: ordersWhere(status),
     orderBy: { createdAt: "desc" },
     include: { items: true },
   });
 
   const filters = [
-    { label: "All", value: "" },
+    { label: "Current", value: "" },
     { label: "Reserved", value: "pending" },
     { label: "Ready", value: "ready" },
     { label: "Picked up", value: "picked_up" },
@@ -29,7 +52,7 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
       <div className="mt-4 flex flex-wrap gap-1 border-b border-[var(--line)]">
         {filters.map((f) => (
           <Link
-            key={f.value || "all"}
+            key={f.value || "current"}
             href={f.value ? `/admin/orders?status=${f.value}` : "/admin/orders"}
             className={(status || "") === f.value ? "chip chip-active" : "chip"}
           >
@@ -37,7 +60,6 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
           </Link>
         ))}
       </div>
-
       <div className="mt-6 overflow-x-auto border border-[var(--line)] bg-[#141414]">
         <table className="w-full min-w-[640px] text-left text-sm">
           <thead className="border-b border-[var(--line)] text-[var(--ink-muted)]">
@@ -47,6 +69,7 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
               <th className="px-4 py-3 font-medium">Status</th>
               <th className="px-4 py-3 font-medium">Pickup</th>
               <th className="px-4 py-3 font-medium">Total</th>
+              <th className="px-4 py-3 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--line)]">
@@ -81,6 +104,12 @@ export default async function AdminOrdersPage({ searchParams }: Props) {
                     {formatDateTime(order.preferredPickupAt)}
                   </td>
                   <td className="px-4 py-3">{formatPrice(total)}</td>
+                  <td className="px-4 py-3">
+                    <OrderListActions
+                      orderId={order.id}
+                      status={order.status}
+                    />
+                  </td>
                 </tr>
               );
             })}

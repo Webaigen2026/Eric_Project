@@ -1,16 +1,26 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { OPEN_HOLD_STATUSES } from "@/lib/stock";
+import { OPEN_HOLD_STATUSES, recentStatusCutoff } from "@/lib/stock";
 import { formatPrice, statusLabel } from "@/lib/format";
 
 export const metadata = { title: "Admin" };
 
 export default async function AdminDashboardPage() {
+  const recentCutoff = recentStatusCutoff();
   const [openOrders, recentOrders, products, accountHolders] = await Promise.all([
     prisma.order.count({
       where: { status: { in: [...OPEN_HOLD_STATUSES] } },
     }),
     prisma.order.findMany({
+      where: {
+        OR: [
+          { status: { in: [...OPEN_HOLD_STATUSES] } },
+          {
+            status: { in: ["picked_up", "cancelled", "expired"] },
+            statusChangedAt: { gte: recentCutoff },
+          },
+        ],
+      },
       orderBy: { createdAt: "desc" },
       take: 8,
       include: { items: true },

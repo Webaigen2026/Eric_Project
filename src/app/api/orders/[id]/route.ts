@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { OPEN_HOLD_STATUSES } from "@/lib/stock";
 
 const updateSchema = z.object({
-  status: z.enum(["pending", "ready", "picked_up", "cancelled"]),
+  status: z.enum(["pending", "ready", "picked_up", "cancelled", "expired"]),
 });
 
 type Params = { params: Promise<{ id: string }> };
@@ -52,14 +52,15 @@ export async function PATCH(req: Request, { params }: Params) {
       });
       if (!existing) throw new Error("NOT_FOUND");
 
-      const wasOpen = (OPEN_HOLD_STATUSES as readonly string[]).includes(
-        existing.status
-      );
       const willBePickedUp = newStatus === "picked_up";
       const alreadyPickedUp = existing.status === "picked_up";
+      const willBeOpen = (OPEN_HOLD_STATUSES as readonly string[]).includes(
+        newStatus
+      );
 
-      // When marking picked_up from an open hold, decrement physical stock
-      if (willBePickedUp && wasOpen && !alreadyPickedUp) {
+      // Sale completes: decrement stock once when entering picked_up
+      // (from reserved, ready, expired, or cancelled).
+      if (willBePickedUp && !alreadyPickedUp) {
         for (const item of existing.items) {
           await tx.product.update({
             where: { id: item.productId },
@@ -68,8 +69,8 @@ export async function PATCH(req: Request, { params }: Params) {
         }
       }
 
-      // If reverting from picked_up back to an open status, restore stock
-      if (alreadyPickedUp && wasOpen === false && (OPEN_HOLD_STATUSES as readonly string[]).includes(newStatus)) {
+      // Re-opening a completed sale restores stock
+      if (alreadyPickedUp && willBeOpen) {
         for (const item of existing.items) {
           await tx.product.update({
             where: { id: item.productId },
@@ -78,12 +79,22 @@ export async function PATCH(req: Request, { params }: Params) {
         }
       }
 
-      // Cancel from picked_up shouldn't re-add stock (sale already completed)
-      // Cancel from pending/ready just releases hold — no stock change needed
+      const now = new Date();
+      const pickedUpAt = willBePickedUp
+        ? alreadyPickedUp
+          ? undefined
+          : now
+        : alreadyPickedUp
+          ? null
+          : undefined;
 
       return tx.order.update({
         where: { id },
-        data: { status: newStatus },
+        data: {
+          status: newStatus,
+          statusChangedAt: now,
+          ...(pickedUpAt !== undefined ? { pickedUpAt } : {}),
+        },
         include: { items: { include: { product: true } } },
       });
     });

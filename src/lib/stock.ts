@@ -6,6 +6,30 @@ export const OPEN_HOLD_STATUSES: string[] = ["pending", "ready"];
 /** A reservation lasts two hours after the chosen pickup time, then the hold is removed. */
 export const RESERVE_WINDOW_MS = 2 * 60 * 60 * 1000;
 
+/**
+ * Resolved statuses stay in their admin filter tab for this long, then drop off.
+ * Ready stays visible until picked up / cancelled / expired.
+ */
+export const STATUS_DISPLAY_MS = 3 * 60 * 60 * 1000;
+
+/** @deprecated use STATUS_DISPLAY_MS */
+export const PICKED_UP_DISPLAY_MS = STATUS_DISPLAY_MS;
+
+export const SHORT_DISPLAY_STATUSES = [
+  "picked_up",
+  "cancelled",
+  "expired",
+] as const;
+
+export function recentStatusCutoff(from = new Date()): Date {
+  return new Date(from.getTime() - STATUS_DISPLAY_MS);
+}
+
+/** @deprecated use recentStatusCutoff */
+export function recentPickedUpCutoff(from = new Date()): Date {
+  return recentStatusCutoff(from);
+}
+
 export function reserveExpiresAt(from = new Date()): Date {
   return new Date(from.getTime() + RESERVE_WINDOW_MS);
 }
@@ -21,7 +45,7 @@ export async function expireReservations(): Promise<number> {
         { expiresAt: null, createdAt: { lt: fallbackCutoff } },
       ],
     },
-    data: { status: "expired" },
+    data: { status: "expired", statusChangedAt: now },
   });
   return result.count;
 }
